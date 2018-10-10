@@ -19,5 +19,10 @@ export default StyleSheet.create({
     },
     regularText: {
         fontFamily: 'Quicksand-Regular'
+    },
+    viewCenterAlign: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

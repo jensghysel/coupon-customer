@@ -6,32 +6,39 @@ import globalStyling from "../utils/global-styling";
 import CouponBar from "../utils/coupon-bar";
 import colors from "../utils/colorsForLists";
 
-export default class Account extends Component{
+export default class Account extends Component {
     static navigationOptions = {
         tabBarLabel: 'Account',
-        tabBarIcon: () => (<Icon size={24} color="rgba(255,255,255, 0.5)" name="person" />)
+        tabBarIcon: () => (<Icon size={24} color="rgba(255,255,255, 0.5)" name="person"/>)
     };
 
     cardsByType = {
-        card: [
+        card: {
+            data: [
+                {
+                    type: 'fysieke kaart',
+                    id: '123',
+                    lastUsed: '27/04/2018'
+                }
+            ],
+            icon: 'credit-card'
+        },
+        kids:
             {
-                type: 'card',
-                id: '123',
-                lastUsed: '27/04/2018'
+                data: [
+                    {
+                        type: 'kids-bandje',
+                        id: '123',
+                        lastUsed: '27/04/2018'
+                    },
+                    {
+                        type: 'kids-bandje',
+                        id: '123',
+                        lastUsed: '27/04/2018'
+                    }
+                ],
+                icon: 'control-point-duplicate'
             }
-        ],
-        kids: [
-            {
-                type: 'kids',
-                id: '123',
-                lastUsed: '27/04/2018'
-            },
-            {
-                type: 'kids',
-                id: '123',
-                lastUsed: '27/04/2018'
-            }
-        ]
     };
 
     render() {
@@ -39,7 +46,10 @@ export default class Account extends Component{
             <View style={{flex: 1}}>
                 <Header
                     backgroundColor={'#fcb147'}
-                    centerComponent={{text: 'ACCOUNT', style: [globalStyling.titleText, {color: 'white', fontSize: 20}]}}
+                    centerComponent={{
+                        text: "ID'S",
+                        style: [globalStyling.titleText, {color: 'white', fontSize: 20}]
+                    }}
                     rightComponent={{icon: 'add-box', color: 'white'}}>
                 </Header>
                 <View>
@@ -49,14 +59,15 @@ export default class Account extends Component{
         );
     }
 
-    renderCouponBars(){
+    renderCouponBars() {
         let couponList = [];
-        //TODO: Start here again
-        // this.cardsByType.forEach((d, index) => {
-        //     couponList.push(
-        //         <CouponBar color={colors[index]} leftText={d.amount + 'x'} centerText={d.name} centerSubText={'Geldig tot '+d.expiryDate} />
-        //     );
-        // });
+        let keys = Object.keys(this.cardsByType);
+        keys.forEach((k, index) => {
+            let cards = this.cardsByType[k];
+            couponList.push(
+                <CouponBar icon={cards.icon} color={colors[index]} centerText={cards.data.length + 'x '+cards.data[0].type} data={this.cardsByType[k].data} centerSubText={'Laatst gebruikt: '+cards.data[0].lastUsed} />
+            );
+        });
         return couponList;
     }
 }
