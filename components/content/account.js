@@ -44,6 +44,10 @@ export default class Account extends Component {
     };
 
     render() {
+        const qrCodeData = this.props.navigation.getParam('qrCodeData');
+        if (qrCodeData && qrCodeData !== this.lastAddedId) {
+            this._addCard(qrCodeData);
+        }
         return (
             <View style={{flex: 1}}>
                 <Header
@@ -52,7 +56,9 @@ export default class Account extends Component {
                         text: "ID'S",
                         style: [globalStyling.titleText, {color: 'white', fontSize: 20}]
                     }}
-                    rightComponent={{icon: 'add-box', color: 'white'}}>
+                    rightComponent={<Icon name='add-box' color='white' size={25} onPress={() => {
+                        this.props.navigation.navigate('ScanQr');
+                    }}/>}>
                 </Header>
                 <View>
                     {this.renderCouponBars()}
@@ -66,11 +72,15 @@ export default class Account extends Component {
         let keys = Object.keys(this.state.cards);
         keys.forEach((k, index) => {
             let cards = this.state.cards[k];
-            couponList.push(
-                <CouponBar icon={cards.icon} color={colors[index]}
-                           centerText={cards.data.length + 'x ' + cards.data[0].type} data={this.state.cards[k].data}
-                           centerSubText={'Laatst gebruikt: ' + cards.data[0].lastUsed} removeCard={this.removeCard}/>
-            );
+            if (cards.data && cards.data.length > 0) {
+                couponList.push(
+                    <CouponBar icon={cards.icon} color={colors[index]}
+                               centerText={cards.data.length + 'x ' + cards.data[0].type}
+                               data={this.state.cards[k].data}
+                               centerSubText={'Laatst gebruikt: ' + cards.data[0].lastUsed}
+                               removeCard={this.removeCard}/>
+                );
+            }
         });
         return couponList;
     }
@@ -91,9 +101,32 @@ export default class Account extends Component {
                     }
                 },
                 {
-                    text: 'Nee', onPress: () => {}
+                    text: 'Nee', onPress: () => {
+                    }
                 }
             ]);
+    };
+
+    _addCard = (id) => {
+        let newState = this.state.cards;
+        if (newState['unknown'] === undefined) {
+            newState['unknown'] = {data: [], icon: 'bestaat-niet'};
+        }
+        if (this._findTypeAndIndexOfId(id).type !== undefined) {
+            Alert.alert("Dit ID werd al aan je portefeuille toegevoegd");
+        } else {
+            this.lastAddedId = id;
+            newState['unknown'].data.push({
+                type: 'unknown',
+                id: id,
+                lastUsed: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()
+            });
+            this.setState({
+                cards: newState
+            });
+            Alert.alert("ID successvol toegevoegd!")
+        }
+
     };
 
     _findTypeAndIndexOfId(id) {

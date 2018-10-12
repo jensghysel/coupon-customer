@@ -32,13 +32,15 @@ export default class CouponBar extends Component {
             );
         }
     };
+
     _renderCardData = (collapse) => {
         let cards = [];
         this.props.data.forEach(d => {
             cards.push(
                 <View style={{flexDirection: 'row', marginTop: 10, padding: 10}}>
                     <Text style={[globalStyling.regularText, {fontSize: 20, flex: 6}]}>{d.id}</Text>
-                    <Icon name='delete' size={20} style={{color: 'red', fontSize: 20, flex: 1}} onPress={() => this.props.removeCard(d.id)}/>
+                    <Icon name='delete' size={20} style={{color: 'red', fontSize: 20, flex: 1}}
+                          onPress={() => this.props.removeCard(d.id)}/>
                 </View>
             );
         });

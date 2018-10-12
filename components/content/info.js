@@ -19,7 +19,7 @@ export default class Info extends Component {
                     <Text style={styles.welcomeText}>Welkom</Text>
                     <Text style={styles.welcomeTextSmall}>{'Fijn dat je bij ons je vakantie spendeert \n \n Koppel hier je kaart en weet \n welke coupons u bezit'}</Text>
                 </ImageBackground>
-                <TouchableHighlight style={styles.cardButton}>
+                <TouchableHighlight style={styles.cardButton} onPress={() => {this.props.navigation.navigate('ScanQr')}}>
                     <Text style={styles.cardButtonText}>Kaart Koppelen</Text>
                 </TouchableHighlight>
                 <View style={{flex: 1, flexDirection: 'row', marginTop: 15}}>
