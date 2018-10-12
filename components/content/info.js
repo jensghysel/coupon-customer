@@ -36,9 +36,7 @@ export default class Info extends Component {
                 </View>
                 <View style={{flex: 1.5, marginTop: 30, marginBottom: 20}}>
                     <View style={[globalStyles.roundedShadedView, {marginLeft: 30, marginRight: 30, flex: 1}]}>
-                        <Icon name='add-alert' color='#fcb147' style={styles.icon} />
-                        <Text style={[globalStyles.titleText, {fontSize: 15, textAlign: 'center', marginTop: 5}]}>NIEUWS</Text>
-                        <SimpleTextSlider data={[{text: 'Vanavond om 18u30 vindt voor de \n 50ste maal de grote bingo avond plaats'}, {text: 'Morgen is de trampoline terug \n van weggeweest, wees er vroeg bij!'}, {text: 'Dit weekend zijn alle dranken aan verminderde \n prijs in de cafetaria tussen 15u & 16u'}]}></SimpleTextSlider>
+                        <SimpleTextSlider titleIcon='add-alert' titleText='Nieuws' data={[{text: 'Vanavond om 18u30 vindt voor de \n 50ste maal de grote bingo avond plaats'}, {text: 'Morgen is de trampoline terug \n van weggeweest, wees er vroeg bij!'}, {text: 'Dit weekend zijn alle dranken aan verminderde \n prijs in de cafetaria tussen 15u & 16u'}]}></SimpleTextSlider>
                     </View>
                 </View>
             </View>
