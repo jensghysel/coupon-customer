@@ -5,6 +5,7 @@ import {Header} from "react-native-elements";
 import globalStyling from "../utils/global-styling";
 import CouponBar from "../utils/coupon-bar";
 import colors from "../utils/colorsForLists";
+import {isCardValid} from "../../services/coupon-service";
 
 export default class Account extends Component {
     static navigationOptions = {
@@ -115,18 +116,25 @@ export default class Account extends Component {
         if (this._findTypeAndIndexOfId(id).type !== undefined) {
             Alert.alert("Dit ID werd al aan je portefeuille toegevoegd");
         } else {
-            this.lastAddedId = id;
-            newState['unknown'].data.push({
-                type: 'unknown',
-                id: id,
-                lastUsed: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()
+            isCardValid(id).then((res) => {
+                if(res === null){
+                    Alert.alert("Dit is een ongeldig ID!");
+                } else {
+                    this.lastAddedId = id;
+                    newState['unknown'].data.push({
+                        type: 'unknown',
+                        id: id,
+                        lastUsed: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()
+                    });
+                    this.setState({
+                        cards: newState
+                    });
+                    Alert.alert("ID successvol toegevoegd!")
+                }
+            }).catch(ex => {
+                console.log(ex);
             });
-            this.setState({
-                cards: newState
-            });
-            Alert.alert("ID successvol toegevoegd!")
         }
-
     };
 
     _findTypeAndIndexOfId(id) {
