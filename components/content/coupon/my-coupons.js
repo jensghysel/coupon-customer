@@ -39,7 +39,7 @@ export default class MyCoupons extends Component {
 
     render(){
         return (
-            <View>
+            <View style={{marginTop: -20}}>
                 {this.renderCouponBars()}
             </View>
         );

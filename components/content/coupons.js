@@ -47,7 +47,7 @@ export default class Coupons extends Component{
                         <TouchableOpacity
                             style={[styles.tabItem, this.state.index === i ? styles.selectedItem : '']}
                             onPress={() => this.setState({ index: i })}>
-                            <Animated.Text style={[{ color, fontSize: 13, paddingTop: 2.5, paddingBottom: 2.5 }, globalStyling.regularText]}>{route.title}</Animated.Text>
+                            <Animated.Text style={[{ color, fontSize: 13, paddingTop: 7, paddingBottom: 7 }, globalStyling.regularText]}>{route.title}</Animated.Text>
                         </TouchableOpacity>
                     );
                 })}
