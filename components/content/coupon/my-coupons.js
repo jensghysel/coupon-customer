@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import CouponBar from '../../utils/coupon-bar';
 import colors from '../../utils/colorsForLists';
-import GlobalStyling  from '../../utils/global-styling';
+import GlobalStyling from '../../utils/global-styling';
+import {getCoupons, ids} from "../../../services/coupon-service";
 
 export default class MyCoupons extends Component {
     data = [
@@ -38,8 +39,23 @@ export default class MyCoupons extends Component {
         // },
     ];
 
-    render(){
-        if(this.data <= 0){
+    state = {
+        coupons: [],
+        ids: []
+    };
+
+    componentDidMount() {
+        setInterval(() => {
+            if (JSON.stringify(this.state.ids) !== JSON.stringify(ids)) {
+                this.setState({ids: JSON.parse(JSON.stringify(ids))});
+                this._retrieveData();
+            }
+        }, 2000);
+    }
+
+    render() {
+        this._retrieveData();
+        if (!this.state) {
             return (
                 <View>
                     <Text style={[GlobalStyling.regularText, {textAlign: 'center'}]}>
@@ -55,13 +71,30 @@ export default class MyCoupons extends Component {
         );
     }
 
-    renderCouponBars(){
+    _retrieveData() {
+        console.log("UPDATE");
+        getCoupons().then(response => {
+            console.log(response);
+            if (JSON.stringify(this.state.coupons) !== JSON.stringify(response)) {
+                this.setState({
+                    coupons: response
+                });
+            }
+        });
+    }
+
+    renderCouponBars() {
         let couponList = [];
-        this.data.forEach((d, index) => {
+        this.state.coupons.forEach((d, index) => {
             couponList.push(
-                <CouponBar color={colors[index]} leftText={d.amount + 'x'} centerText={d.name} centerSubText={'Geldig tot '+d.expiryDate} />
+                <CouponBar color={colors[index]} leftText={d.amount + 'x'} centerText={d.coupon.couponDescription}
+                           centerSubText={'Geldig tot ' + d.coupon.expirationDate}/>
             );
         });
         return couponList;
+    }
+
+    refresh() {
+        this._retrieveData();
     }
 }

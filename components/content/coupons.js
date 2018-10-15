@@ -1,34 +1,39 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, Dimensions, TouchableOpacity, Animated} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableOpacity, Animated, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Header} from "react-native-elements";
 import globalStyling from '../utils/global-styling';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import MyCoupons from "./coupon/my-coupons";
 
-const FirstRoute = () => (
-    <MyCoupons />
-);
-const SecondRoute = () => (
-    <View style={[{ backgroundColor: '#f4416b', flex: 1 }]} />
-);
-const thirdRoute = () => (
-    <View style={[{ backgroundColor: '#673ab7', flex: 1 }]} />
-);
-
 export default class Coupons extends Component{
-    static navigationOptions = {
-        tabBarLabel: 'Coupons',
-        tabBarIcon: () => (<Icon size={24} color="rgba(255,255,255, 0.5)" name="receipt" />)
-    };
-
     state = {
         index: 0,
         routes: [
             { key: 'first', title: 'MIJN COUPONS' },
             { key: 'second', title: 'ACTIES' },
             { key: 'third', title: 'HISTORIEK' },
-        ],
+        ]
+    };
+
+    constructor(props) {
+        super(props);
+        this.myCouponsChild = React.createRef();
+    }
+
+    FirstRoute = () => (
+        <MyCoupons ref={this.myCouponsChild} />
+    );
+    SecondRoute = () => (
+        <View style={[{ backgroundColor: '#f4416b', flex: 1 }]} />
+    );
+    thirdRoute = () => (
+        <View style={[{ backgroundColor: '#673ab7', flex: 1 }]} />
+    );
+
+    static navigationOptions = {
+        tabBarLabel: 'Coupons',
+        tabBarIcon: () => (<Icon size={24} color="rgba(255,255,255, 0.5)" name="receipt" />)
     };
 
     _renderTabBar = props => {
@@ -61,14 +66,16 @@ export default class Coupons extends Component{
                 <Header
                     backgroundColor={'#fcb147'}
                     centerComponent={{text: 'COUPONS', style: [globalStyling.titleText, {color: 'white', fontSize: 20}]}}
-                    rightComponent={{icon: 'search', color: 'white'}}>
+                    rightComponent={<Icon name='refresh' color='white' size={25} onPress={() => {
+                        this._refresh()
+                    }} />}>
                 </Header>
                 <TabView
                     navigationState={this.state}
                     renderScene={SceneMap({
-                        first: FirstRoute,
-                        second: SecondRoute,
-                        third: thirdRoute,
+                        first: this.FirstRoute,
+                        second: this.SecondRoute,
+                        third: this.thirdRoute,
                     })}
                     renderTabBar={this._renderTabBar}
                     onIndexChange={index => this.setState({ index })}
@@ -76,6 +83,10 @@ export default class Coupons extends Component{
                 />
             </View>
         );
+    }
+
+    _refresh(){
+        this.myCouponsChild.current.refresh();
     }
 }
 

@@ -1,5 +1,9 @@
+export const baseUrl = 'http://rocket.ccvlab.eu:8080/json/';
+
+export const ids = [];
+
 export const isCardValid = (id) => {
-    return fetch('http://rocket.ccvlab.eu:8080/json/isCardValid?cardIdentifier=' + id, {
+    return fetch(baseUrl + 'cards/isCardValid?cardIdentifier=' + id, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
@@ -13,7 +17,37 @@ export const isCardValid = (id) => {
                 return response;
             }
         } else {
+            ids.push(id);
             return response.json();
+        }
+    });
+};
+
+export const removeCard = (id) => {
+    let index = ids.indexOf(id);
+    if (index > -1) {
+        ids.splice(ids.indexOf(id), 1);
+    }
+};
+
+export const getCoupons = () => {
+    return new Promise(function (resolve, reject) {
+        if (ids && ids.length > 0) {
+            fetch(baseUrl + 'customers/customerLoyaltyInfo?cardIdentifier=' + ids[0], {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                response.json().then(r => {
+                    resolve(r.customer.balance.couponQuantitys);
+                });
+            }).catch(e => {
+                reject(e);
+            });
+        } else {
+            resolve([]);
         }
     });
 };

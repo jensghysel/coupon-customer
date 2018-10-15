@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {View, Alert} from 'react-native';
+import {View, Alert, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Header} from "react-native-elements";
 import globalStyling from "../utils/global-styling";
 import CouponBar from "../utils/coupon-bar";
 import colors from "../utils/colorsForLists";
-import {isCardValid} from "../../services/coupon-service";
+import {isCardValid, removeCard} from "../../services/coupon-service";
 
 export default class Account extends Component {
     static navigationOptions = {
@@ -15,32 +15,32 @@ export default class Account extends Component {
 
     state = {
         cards: {
-            card: {
-                data: [
-                    {
-                        type: 'fysieke kaart',
-                        id: '123',
-                        lastUsed: '27/04/2018'
-                    }
-                ],
-                icon: 'credit-card'
-            },
-            kids:
-                {
-                    data: [
-                        {
-                            type: 'kids-bandje',
-                            id: '1234',
-                            lastUsed: '27/04/2018'
-                        },
-                        {
-                            type: 'kids-bandje',
-                            id: '1235',
-                            lastUsed: '27/04/2018'
-                        }
-                    ],
-                    icon: 'control-point-duplicate'
-                }
+            // card: {
+            //     data: [
+            //         {
+            //             type: 'fysieke kaart',
+            //             id: '123',
+            //             lastUsed: '27/04/2018'
+            //         }
+            //     ],
+            //     icon: 'credit-card'
+            // },
+            // kids:
+            //     {
+            //         data: [
+            //             {
+            //                 type: 'kids-bandje',
+            //                 id: '1234',
+            //                 lastUsed: '27/04/2018'
+            //             },
+            //             {
+            //                 type: 'kids-bandje',
+            //                 id: '1235',
+            //                 lastUsed: '27/04/2018'
+            //             }
+            //         ],
+            //         icon: 'control-point-duplicate'
+            //     }
         }
     };
 
@@ -61,11 +61,31 @@ export default class Account extends Component {
                         this.props.navigation.navigate('ScanQr');
                     }}/>}>
                 </Header>
-                <View>
-                    {this.renderCouponBars()}
+                <View style={{marginTop: 20}}>
+                    {this._renderContent()}
                 </View>
             </View>
         );
+    }
+
+    _renderContent() {
+        let content;
+        if (!this.state.cards || Object.keys(this.state.cards).length === 0) {
+            content = (
+                <View>
+                    <Text style={[globalStyling.regularText, {textAlign: 'center'}]}>
+                        U hebt nog geen kaarten / ID's toegevoegd.
+                    </Text>
+                </View>
+            );
+        } else {
+            content = (
+                <View>
+                    {this.renderCouponBars()}
+                </View>
+            );
+        }
+        return content;
     }
 
     renderCouponBars() {
@@ -99,6 +119,7 @@ export default class Account extends Component {
                                 cards: this.state.cards
                             }
                         );
+                        removeCard(id);
                     }
                 },
                 {

@@ -15,7 +15,7 @@ export default class ScanQr extends Component {
     _returnToHome(){
         // this.props.navigation.navigate('Info');
         this.props.navigation.navigate('Account', {
-            qrCodeData: '158318'
+            qrCodeData: '1111966154242130'
         });
     }
 
