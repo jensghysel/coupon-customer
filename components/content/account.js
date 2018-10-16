@@ -132,7 +132,7 @@ export default class Account extends Component {
     _addCard = (id) => {
         let newState = this.state.cards;
         if (newState['unknown'] === undefined) {
-            newState['unknown'] = {data: [], icon: 'bestaat-niet'};
+            newState['unknown'] = {data: [], icon: 'wallpaper'};
         }
         if (this._findTypeAndIndexOfId(id).type !== undefined) {
             Alert.alert("Dit ID werd al aan je portefeuille toegevoegd");
@@ -143,7 +143,7 @@ export default class Account extends Component {
                 } else {
                     this.lastAddedId = id;
                     newState['unknown'].data.push({
-                        type: 'unknown',
+                        type: 'kaarten',
                         id: id,
                         lastUsed: new Date().getDay() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()
                     });

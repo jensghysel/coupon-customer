@@ -72,9 +72,7 @@ export default class MyCoupons extends Component {
     }
 
     _retrieveData() {
-        console.log("UPDATE");
         getCoupons().then(response => {
-            console.log(response);
             if (JSON.stringify(this.state.coupons) !== JSON.stringify(response)) {
                 this.setState({
                     coupons: response

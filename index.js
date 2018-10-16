@@ -9,6 +9,7 @@ import Coupons from "./components/content/coupons";
 import Account from "./components/content/account";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ScanQr from "./components/content/scan-qr";
+import Plattegrond from "./components/content/info/plattegrond";
 
 const MyApp =
     StackNavigator({
@@ -51,7 +52,8 @@ const MyApp =
                     }),
             others: {
                 screen: StackNavigator({
-                    ScanQr: ScanQr
+                    ScanQr: ScanQr,
+                    Plattegrond: Plattegrond
                 }, {headerMode: 'hide'})
             }
         },
