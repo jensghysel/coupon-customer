@@ -55,7 +55,7 @@ export default class MyCoupons extends Component {
 
     render() {
         this._retrieveData();
-        if (!this.state) {
+        if (!this.state || this.state.coupons.length === 0) {
             return (
                 <View>
                     <Text style={[GlobalStyling.regularText, {textAlign: 'center'}]}>
