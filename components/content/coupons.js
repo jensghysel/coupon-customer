@@ -5,13 +5,14 @@ import {Header} from "react-native-elements";
 import globalStyling from '../utils/global-styling';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import MyCoupons from "./coupon/my-coupons";
+import Overview from "./coupon/overview";
 
 export default class Coupons extends Component{
     state = {
         index: 0,
         routes: [
             { key: 'first', title: 'MIJN COUPONS' },
-            { key: 'second', title: 'ACTIES' },
+            { key: 'second', title: 'COUPONS' },
             { key: 'third', title: 'HISTORIEK' },
         ]
     };
@@ -25,7 +26,7 @@ export default class Coupons extends Component{
         <MyCoupons ref={this.myCouponsChild} />
     );
     SecondRoute = () => (
-        <View style={[{ backgroundColor: '#f4416b', flex: 1 }]} />
+        <Overview />
     );
     thirdRoute = () => (
         <View style={[{ backgroundColor: '#673ab7', flex: 1 }]} />

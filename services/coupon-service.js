@@ -51,3 +51,22 @@ export const getCoupons = () => {
         }
     });
 };
+
+export const allCoupons = () => {
+    return fetch(baseUrl + "coupons/all").then(response => response.json()).catch(ex => console.log(ex));
+};
+
+export const assignCoupon = (couponId, cardId) => {
+    return fetch(baseUrl + 'customers/customerLoyaltyInfo?cardIdentifier=' + ids[0], {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            customerId: cardId,
+            couponId: couponId,
+            startDate: new Date()
+        })
+    });
+};

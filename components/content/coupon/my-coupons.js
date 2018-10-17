@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import CouponBar from '../../utils/coupon-bar';
 import colors from '../../utils/colorsForLists';
 import GlobalStyling from '../../utils/global-styling';
@@ -65,9 +65,9 @@ export default class MyCoupons extends Component {
             );
         }
         return (
-            <View style={{marginTop: -20}}>
+            <ScrollView style={{marginTop: -20}}>
                 {this.renderCouponBars()}
-            </View>
+            </ScrollView>
         );
     }
 
