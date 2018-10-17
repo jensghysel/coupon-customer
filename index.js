@@ -10,6 +10,7 @@ import Account from "./components/content/account";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ScanQr from "./components/content/scan-qr";
 import Plattegrond from "./components/content/info/plattegrond";
+import Bancontact from "./components/content/bancontact";
 
 const MyApp =
     StackNavigator({
@@ -53,7 +54,8 @@ const MyApp =
             others: {
                 screen: StackNavigator({
                     ScanQr: ScanQr,
-                    Plattegrond: Plattegrond
+                    Plattegrond: Plattegrond,
+                    Bancontact: Bancontact
                 }, {headerMode: 'hide'})
             }
         },

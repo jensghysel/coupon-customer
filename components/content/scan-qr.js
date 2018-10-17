@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Header} from "react-native-elements";
 import globalStyling from "../utils/global-styling";
-import {View, StyleSheet, Text, TouchableOpacity} from "react-native";
+import {View, StyleSheet} from "react-native";
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import Icon from "react-native-vector-icons/MaterialIcons";
 

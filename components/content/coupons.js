@@ -26,7 +26,7 @@ export default class Coupons extends Component{
         <MyCoupons ref={this.myCouponsChild} />
     );
     SecondRoute = () => (
-        <Overview />
+        <Overview navigation={this.props.navigation} />
     );
     thirdRoute = () => (
         <View style={[{ backgroundColor: '#673ab7', flex: 1 }]} />
@@ -62,6 +62,12 @@ export default class Coupons extends Component{
     };
 
     render() {
+        if(this.props.navigation.getParam('fromPayment')){
+            this.setState({index: 0});
+            this.props.navigation.setParams({'fromPayment': false});
+            this._refresh();
+            Alert.alert("Coupons succesvol toegevoegd")
+        }
         return (
             <View style={{flex: 1}}>
                 <Header
