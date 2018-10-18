@@ -3,13 +3,25 @@ import {Header} from "react-native-elements";
 import globalStyling from "../utils/global-styling";
 import {View, ActivityIndicator, Text} from "react-native";
 import GlobalStyling from '../utils/global-styling';
+import {assignCoupon, ids} from "../../services/coupon-service";
 
 export default class Bancontact extends Component {
 
-    render(){
-        setTimeout(() => {
-            this.props.navigation.navigate("Coupons", {fromPayment: true});
-        }, 5000);
+    render() {
+        let selectedCoupons = this.props.navigation.getParam("selectedCoupons");
+
+        if(selectedCoupons !== null) {
+            setTimeout(() => {
+                this.props.navigation.setParams({'selectedCoupons': null});
+                this.props.navigation.navigate("Coupons", {fromPayment: true});
+            }, 5000);
+
+            Object.keys(selectedCoupons).forEach(c => {
+                for (let i = 0; i < selectedCoupons[c]; i++) {
+                    assignCoupon(selectedCoupons[c], ids[0]);
+                }
+            });
+        }
 
         return(
             <View style={{flex: 1}}>

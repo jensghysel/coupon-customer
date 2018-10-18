@@ -57,16 +57,17 @@ export const allCoupons = () => {
 };
 
 export const assignCoupon = (couponId, cardId) => {
-    return fetch(baseUrl + 'customers/customerLoyaltyInfo?cardIdentifier=' + ids[0], {
+    let body = JSON.stringify({
+        customerId: parseInt(cardId),
+        couponId: couponId
+    });
+
+    return fetch(baseUrl + 'coupons/assign', {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            customerId: cardId,
-            couponId: couponId,
-            startDate: new Date()
-        })
-    });
+        body: body
+    }).then(response => console.log(response)).catch(ex => console.log(ex));
 };

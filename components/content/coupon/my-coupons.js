@@ -86,7 +86,7 @@ export default class MyCoupons extends Component {
         this.state.coupons.forEach((d, index) => {
             couponList.push(
                 <CouponBar color={colors[index]} leftText={d.amount + 'x'} centerText={d.coupon.couponDescription}
-                           centerSubText={'Geldig tot ' + d.coupon.expirationDate}/>
+                           centerSubText={'Geldig tot ' + longToDate(d.coupon.expirationDate)}/>
             );
         });
         return couponList;
@@ -96,3 +96,7 @@ export default class MyCoupons extends Component {
         this._retrieveData();
     }
 }
+
+const longToDate = function(millisec) {
+    return (new Date(millisec).toLocaleDateString());
+};

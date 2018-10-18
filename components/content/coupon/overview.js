@@ -71,8 +71,9 @@ export default class Overview extends Component {
                 <View style={{flexDirection: 'row', backgroundColor: 'rgba(252,177,71, 0.6)', padding: 10}}>
                     <Text style={[GlobalStyling.regularText, {flex: 4, fontSize: 15, color: 'white'}]}>{newTotal} coupon(s) toevoegen aan je ID's?</Text>
                     <TouchableOpacity style={{flex: 1, borderRadius: 5, backgroundColor: 'rgba(252,177,71, 1.0)'}} onPress={() => {
+                        let selectedCoupons = this.state.couponCount;
                         this.setState({couponCount: {}});
-                        this.props.navigation.navigate('Bancontact');
+                        this.props.navigation.navigate('Bancontact', {selectedCoupons: selectedCoupons});
                     }}>
                         <Text style={[GlobalStyling.titleText, {fontSize: 12, color: 'white', textAlign: 'center', padding: 5}]}>KLIK HIER</Text>
                     </TouchableOpacity>
